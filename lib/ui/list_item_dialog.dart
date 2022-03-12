@@ -38,7 +38,7 @@ class ListItemDialog {
                   item.name = txtName.text;
                   item.quantity = txtQuantity.text;
                   item.note = txtNote.text;
-                  helper.insertItem(item);
+                  // helper.insertItem(item);
                   Navigator.pop(context);
                 },
                 shape: RoundedRectangleBorder(
