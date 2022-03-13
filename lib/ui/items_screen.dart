@@ -53,7 +53,7 @@ class _ItemsScreenState extends State<ItemsScreen> {
                   title: Text(items[index].name),
                   subtitle: Text(
                       'Quantity: ${items[index].quantity} - Note:  ${items[index]
-                          .note}'),
+                          .note}\n${items[index].price}'),
                   onTap: () {},
                   trailing: IconButton(
                     icon: Icon(Icons.edit),
@@ -73,7 +73,7 @@ class _ItemsScreenState extends State<ItemsScreen> {
               context: context,
               builder: (BuildContext context) =>
                   dialog.buildAlert(
-                      context, ListItem(0, this.shoppingList.id, "", "", ""),
+                      context, ListItem(0, this.shoppingList.id, "",0, "", ""),
                       true),
             );
           },

@@ -4,7 +4,7 @@ class ShoppingList {
   String gender;
   String species;
 
-  ShoppingList(this.id, this.name, this.gender,this.species);
+  ShoppingList(this.id, this.name,this.gender,this.species,);
 
   Map<String, dynamic> toMap() {
     return {

@@ -32,9 +32,9 @@ class DbHelper {
       db = await openDatabase(join(await getDatabasesPath(), 'shopping.db'),
           onCreate: (database, version) {
             database.execute(
-                'CREATE TABLE lists(id INTEGER PRIMARY KEY, name TEXT, gender TEXT,species TEXT,)');
+                'CREATE TABLE lists(id INTEGER PRIMARY KEY, name TEXT, gender TEXT, species TEXT)');
             database.execute(
-                'CREATE TABLE items(id INTEGER PRIMARY KEY, idList INTEGER, name TEXT, quantity TEXT, note TEXT, ' +
+                'CREATE TABLE items(id INTEGER PRIMARY KEY, idList INTEGER, name TEXT, price REAL, quantity TEXT, note TEXT, ' +
                     'FOREIGN KEY(idList) REFERENCES lists(id))');
           }, version: version);
     }
@@ -79,6 +79,7 @@ class DbHelper {
         maps[i]['id'],
         maps[i]['idList'],
         maps[i]['name'],
+        maps[i]['price'],
         maps[i]['quantity'],
         maps[i]['note'],
       );

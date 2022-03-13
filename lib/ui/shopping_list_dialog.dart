@@ -6,6 +6,7 @@ class ShoppingListDialog {
   final txtName = TextEditingController();
   final txtGender = TextEditingController();
   final txtSpecies = TextEditingController();
+  final txtPriority = TextEditingController();
 
   Widget buildDialog(BuildContext context, ShoppingList list, bool isNew) {
     DbHelper helper = DbHelper();
