@@ -61,9 +61,10 @@ class _ShListState extends State<ShList> {
                 },
                 child: ListTile(
                     title: Text(shoppingList[index].name),
-                    leading: CircleAvatar(
-                      child: Text(shoppingList[index].priority.toString()),
-                    ),
+                    leading: Text("Gender: ${shoppingList[index].gender}\nSpecies: ${shoppingList[index].species}"),
+                    // CircleAvatar(
+                    //   child: Text(shoppingList[index].priority.toString()),
+                    // ),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -88,7 +89,7 @@ class _ShListState extends State<ShList> {
           showDialog(
             context: context,
             builder: (BuildContext context) =>
-                dialog.buildDialog(context, ShoppingList(0, '', 0), true),
+                dialog.buildDialog(context, ShoppingList(0, '', '',''), true),
           );
         },
         child: Icon(Icons.add),

@@ -65,7 +65,8 @@ class DbHelper {
       return ShoppingList(
         maps[i]['id'],
         maps[i]['name'],
-        maps[i]['priority'],
+        maps[i]['gender'],
+        maps[i]['species'],
       );
     });
   }
