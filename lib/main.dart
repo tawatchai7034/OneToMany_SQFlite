@@ -61,7 +61,8 @@ class _ShListState extends State<ShList> {
                 },
                 child: ListTile(
                     title: Text(shoppingList[index].name),
-                    leading: Text("Gender: ${shoppingList[index].gender}\nSpecies: ${shoppingList[index].species}"),
+                    subtitle: Text("Gender: ${shoppingList[index].gender}\nSpecies: ${shoppingList[index].species}"),
+                    // leading: 
                     // CircleAvatar(
                     //   child: Text("Gender: ${shoppingList[index].gender}\nSpecies: ${shoppingList[index].species}"),
                     // ),

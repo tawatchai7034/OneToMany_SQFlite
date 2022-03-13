@@ -44,6 +44,7 @@ class ListItemDialog {
                 onPressed: () {
                   item.name = txtName.text;
                   item.price = double.parse(txtPrice.text);
+                  item.date = DateTime.now().toIso8601String();
                   item.quantity = txtQuantity.text;
                   item.note = txtNote.text;
                   helper.insertItem(item);
