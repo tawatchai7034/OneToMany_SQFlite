@@ -39,9 +39,9 @@ class _ItemsScreenState extends State<ItemsScreen> {
             itemCount: (items != null) ? items.length : 0,
             itemBuilder: (BuildContext context, int index) {
               return Dismissible(
-                key: Key(items[index].name),
+                key: Key(items[index].date),
                 onDismissed: (direction) {
-                  String strName = items[index].name;
+                  String strName = items[index].date;
                   helper.deleteItem(items[index]);
                   setState(() {
                     items.removeAt(index);
@@ -50,10 +50,10 @@ class _ItemsScreenState extends State<ItemsScreen> {
                       SnackBar(content: Text("Item $strName deleted")));
                 },
                 child: ListTile(
-                  title: Text(items[index].name),
+                  title: Text(items[index].date),
                   subtitle: Text(
                       'Quantity: ${items[index].quantity} - Note:  ${items[index]
-                          .note}\nprice: ${items[index].price}\nDate: ${items[index].date}'),
+                          .note}'),
                   onTap: () {},
                   trailing: IconButton(
                     icon: Icon(Icons.edit),
@@ -73,7 +73,7 @@ class _ItemsScreenState extends State<ItemsScreen> {
               context: context,
               builder: (BuildContext context) =>
                   dialog.buildAlert(
-                      context, ListItem(0, this.shoppingList.id, "",0,DateTime.now().toIso8601String(), "", ""),
+                      context, ListItem(0, this.shoppingList.id,0,0,0,0,0,0,0,DateTime.now().toIso8601String(), "", ""),
                       true),
             );
           },

@@ -4,8 +4,13 @@ import '../models/list_items.dart';
 import '../util/dbhelper.dart';
 
 class ListItemDialog {
-  final txtName = TextEditingController();
-  final txtPrice = TextEditingController();
+  final txtBodyLenght = TextEditingController();
+  final txtHeartGirth = TextEditingController();
+  final txtHearLenghtSide = TextEditingController();
+  final txtHearLenghtRear = TextEditingController();
+  final txtHearLenghtTop = TextEditingController();
+  final txtPixelReference = TextEditingController();
+  final txtDistanceReference = TextEditingController();
   final txtQuantity = TextEditingController();
   final txtNote = TextEditingController();
 
@@ -14,8 +19,13 @@ class ListItemDialog {
     DbHelper helper = DbHelper();
     helper.openDb();
     if (!isNew) {
-      txtName.text = item.name;
-      txtPrice.text = item.price.toString();
+      txtBodyLenght.text = item.bodyLenght.toString();
+      txtHeartGirth.text = item.heartGirth.toString();
+      txtHearLenghtSide.text = item.hearLenghtSide.toString();
+      txtHearLenghtRear.text = item.hearLenghtRear.toString();
+      txtHearLenghtTop.text = item.hearLenghtTop.toString();
+      txtPixelReference.text = item.pixelReference.toString();
+      txtDistanceReference.text = item.distanceReference.toString();
       txtQuantity.text = item.quantity;
       txtNote.text = item.note;
     }
@@ -25,10 +35,31 @@ class ListItemDialog {
         child: Column(
           children: <Widget>[
             TextField(
-                controller: txtName,
-                decoration: InputDecoration(hintText: 'Item Name')),
+                controller: txtBodyLenght,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(hintText: 'Price')),
             TextField(
-                controller: txtPrice,
+                controller: txtHeartGirth,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(hintText: 'Price')),
+            TextField(
+                controller: txtHearLenghtSide,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(hintText: 'Price')),
+            TextField(
+                controller: txtHearLenghtRear,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(hintText: 'Price')),
+            TextField(
+                controller: txtHearLenghtTop,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(hintText: 'Price')),
+            TextField(
+                controller: txtPixelReference,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(hintText: 'Price')),
+            TextField(
+                controller: txtDistanceReference,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(hintText: 'Price')),
             TextField(
@@ -42,8 +73,13 @@ class ListItemDialog {
             RaisedButton(
                 child: Text('Save Item'),
                 onPressed: () {
-                  item.name = txtName.text;
-                  item.price = double.parse(txtPrice.text);
+                  item.bodyLenght = double.parse(txtBodyLenght.text);
+                  item.heartGirth = double.parse(txtHeartGirth.text);
+                  item.hearLenghtSide = double.parse(txtHearLenghtSide.text);
+                  item.hearLenghtRear = double.parse(txtHearLenghtRear.text);
+                  item.hearLenghtTop = double.parse(txtHearLenghtTop.text);
+                  item.pixelReference = double.parse(txtPixelReference.text);
+                  item.distanceReference = double.parse(txtDistanceReference.text);
                   item.date = DateTime.now().toIso8601String();
                   item.quantity = txtQuantity.text;
                   item.note = txtNote.text;

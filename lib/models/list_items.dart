@@ -1,21 +1,44 @@
 class ListItem {
   int id;
   int idList;
-  String name;
-  double price;
+  double bodyLenght;
+  double heartGirth;
+  double hearLenghtSide;
+  double hearLenghtRear;
+  double hearLenghtTop;
+  double pixelReference;
+  double distanceReference;
   String date;
   String quantity;
   String note;
 
-  ListItem(this.id, this.idList, this.name, this.price,this.date,this.quantity, this.note);
+  ListItem(
+    this.id,
+    this.idList,
+    this.bodyLenght,
+    this.heartGirth,
+    this.hearLenghtSide,
+    this.hearLenghtRear,
+    this.hearLenghtTop,
+    this.pixelReference,
+    this.distanceReference,
+    this.date,
+    this.quantity,
+    this.note,
+  );
 
   Map<String, dynamic> toMap() {
     return {
       'id': (id == 0) ? null : id,
       'idList': idList,
-      'name': name,
-      'date':date,
-      'price': price,
+      'bodyLenght': bodyLenght,
+      'heartGirth': heartGirth,
+      'hearLenghtSide': hearLenghtSide,
+      'hearLenghtRear': hearLenghtRear,
+      'hearLenghtTop': hearLenghtTop,
+      'pixelReference': pixelReference,
+      'distanceReference': distanceReference,
+      'date': date,
       'quantity': quantity,
       'note': note
     };

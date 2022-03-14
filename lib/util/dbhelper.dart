@@ -34,7 +34,7 @@ class DbHelper {
             database.execute(
                 'CREATE TABLE lists(id INTEGER PRIMARY KEY, name TEXT, gender TEXT, species TEXT)');
             database.execute(
-                'CREATE TABLE items(id INTEGER PRIMARY KEY, idList INTEGER, name TEXT, price REAL,date TEXT, quantity TEXT, note TEXT, ' +
+                'CREATE TABLE items(id INTEGER PRIMARY KEY, idList INTEGER,bodyLenght REAL,heartGirth REAL,hearLenghtSide REAL,hearLenghtRear REAL,hearLenghtTop REAL,pixelReference REAL,distanceReference REAL,date TEXT, quantity TEXT, note TEXT, ' +
                     'FOREIGN KEY(idList) REFERENCES lists(id))');
           }, version: version);
     }
@@ -78,8 +78,13 @@ class DbHelper {
       return ListItem(
         maps[i]['id'],
         maps[i]['idList'],
-        maps[i]['name'],
-        maps[i]['price'],
+        maps[i]['bodyLenght'],
+        maps[i]['heartGirth'],
+        maps[i]['hearLenghtSide'],
+        maps[i]['hearLenghtRear'],
+        maps[i]['hearLenghtTop'],
+        maps[i]['pixelReference'],
+        maps[i]['distanceReference'],
         maps[i]['date'],
         maps[i]['quantity'],
         maps[i]['note'],
