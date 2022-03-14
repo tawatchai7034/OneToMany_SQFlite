@@ -34,14 +34,14 @@ class DbHelper {
             database.execute(
                 'CREATE TABLE lists(id INTEGER PRIMARY KEY, name TEXT, gender TEXT, species TEXT)');
             database.execute(
-                'CREATE TABLE items(id INTEGER PRIMARY KEY, idList INTEGER,bodyLenght REAL,heartGirth REAL,hearLenghtSide REAL,hearLenghtRear REAL,hearLenghtTop REAL,pixelReference REAL,distanceReference REAL,date TEXT, quantity TEXT, note TEXT, ' +
+                'CREATE TABLE items(id INTEGER PRIMARY KEY, idList INTEGER,bodyLenght REAL,heartGirth REAL,hearLenghtSide REAL,hearLenghtRear REAL,hearLenghtTop REAL,pixelReference REAL,distanceReference REAL,date TEXT ' +
                     'FOREIGN KEY(idList) REFERENCES lists(id))');
           }, version: version);
     }
     return db;
   }
 
-  Future<int> insertList(ShoppingList list) async {
+  Future<int> insertList(CattlePro list) async {
     int id = await this.db.insert(
       'lists',
       list.toMap(),
@@ -50,7 +50,7 @@ class DbHelper {
     return id;
   }
 
-  Future<int> insertItem(ListItem item) async {
+  Future<int> insertItem(CattleTime item) async {
     int id = await db.insert(
       'items',
       item.toMap(),
@@ -59,10 +59,10 @@ class DbHelper {
     return id;
   }
 
-  Future<List<ShoppingList>> getLists() async {
+  Future<List<CattlePro>> getLists() async {
     final List<Map<String, dynamic>> maps = await db.query('lists');
     return List.generate(maps.length, (i) {
-      return ShoppingList(
+      return CattlePro(
         maps[i]['id'],
         maps[i]['name'],
         maps[i]['gender'],
@@ -71,11 +71,11 @@ class DbHelper {
     });
   }
 
-  Future<List<ListItem>> getItems(int idList) async {
+  Future<List<CattleTime>> getItems(int idList) async {
     final List<Map<String, dynamic>> maps =
     await db.query('items', where: 'idList = ?', whereArgs: [idList]);
     return List.generate(maps.length, (i) {
-      return ListItem(
+      return CattleTime(
         maps[i]['id'],
         maps[i]['idList'],
         maps[i]['bodyLenght'],
@@ -86,20 +86,19 @@ class DbHelper {
         maps[i]['pixelReference'],
         maps[i]['distanceReference'],
         maps[i]['date'],
-        maps[i]['quantity'],
-        maps[i]['note'],
+
       );
     });
   }
 
-  Future<int> deleteList(ShoppingList list) async {
+  Future<int> deleteList(CattlePro list) async {
     int result = await db.delete(
         "items", where: "idList = ?", whereArgs: [list.id]);
     result = await db.delete("lists", where: "id = ?", whereArgs: [list.id]);
     return result;
   }
 
-    Future<int> deleteItem(ListItem Item) async {
+    Future<int> deleteItem(CattleTime Item) async {
     int result = await db.delete(
         "items", where: "id = ?", whereArgs: [Item.id]);
     return result;

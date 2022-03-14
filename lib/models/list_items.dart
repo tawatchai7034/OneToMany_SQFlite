@@ -1,4 +1,4 @@
-class ListItem {
+class CattleTime {
   int id;
   int idList;
   double bodyLenght;
@@ -9,10 +9,8 @@ class ListItem {
   double pixelReference;
   double distanceReference;
   String date;
-  String quantity;
-  String note;
 
-  ListItem(
+  CattleTime(
     this.id,
     this.idList,
     this.bodyLenght,
@@ -23,8 +21,6 @@ class ListItem {
     this.pixelReference,
     this.distanceReference,
     this.date,
-    this.quantity,
-    this.note,
   );
 
   Map<String, dynamic> toMap() {
@@ -38,9 +34,7 @@ class ListItem {
       'hearLenghtTop': hearLenghtTop,
       'pixelReference': pixelReference,
       'distanceReference': distanceReference,
-      'date': date,
-      'quantity': quantity,
-      'note': note
+      'date': date
     };
   }
 }

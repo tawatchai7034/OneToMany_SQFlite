@@ -1,10 +1,10 @@
-class ShoppingList {
+class CattlePro {
   int id;
   String name;
   String gender;
   String species;
 
-  ShoppingList(this.id, this.name,this.gender,this.species,);
+  CattlePro(this.id, this.name,this.gender,this.species,);
 
   Map<String, dynamic> toMap() {
     return {

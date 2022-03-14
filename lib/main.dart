@@ -28,7 +28,7 @@ class ShList extends StatefulWidget {
 }
 
 class _ShListState extends State<ShList> {
-  List<ShoppingList> shoppingList;
+  List<CattlePro> shoppingList;
   DbHelper helper = DbHelper();
   ShoppingListDialog dialog;
 
@@ -90,7 +90,7 @@ class _ShListState extends State<ShList> {
           showDialog(
             context: context,
             builder: (BuildContext context) =>
-                dialog.buildDialog(context, ShoppingList(0, '','',''), true),
+                dialog.buildDialog(context, CattlePro(0, '','',''), true),
           );
         },
         child: Icon(Icons.add),
