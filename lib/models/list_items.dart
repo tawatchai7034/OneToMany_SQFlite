@@ -1,4 +1,4 @@
-class CattleTime {
+class ListItem {
   int id;
   int idList;
   double bodyLenght;
@@ -8,9 +8,14 @@ class CattleTime {
   double hearLenghtTop;
   double pixelReference;
   double distanceReference;
+  String imageSide;
+  String imageRear;
+  String imageTop;
   String date;
+  String quantity;
+  String note;
 
-  CattleTime(
+  ListItem(
     this.id,
     this.idList,
     this.bodyLenght,
@@ -20,7 +25,12 @@ class CattleTime {
     this.hearLenghtTop,
     this.pixelReference,
     this.distanceReference,
+    this.imageSide,
+    this.imageRear,
+    this.imageTop,
     this.date,
+    this.quantity,
+    this.note,
   );
 
   Map<String, dynamic> toMap() {
@@ -34,7 +44,12 @@ class CattleTime {
       'hearLenghtTop': hearLenghtTop,
       'pixelReference': pixelReference,
       'distanceReference': distanceReference,
-      'date': date
+      'imageSide': imageSide,
+      'imageRear': imageRear,
+      'imageTop': imageTop,
+      'date': date,
+      'quantity': quantity,
+      'note': note
     };
   }
 }

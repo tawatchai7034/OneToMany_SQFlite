@@ -1,34 +1,52 @@
 // @dart=2.9
+import 'dart:async';
+import 'dart:io';
+
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'util/dbhelper.dart';
+
+import 'package:one_to_many_sqf/ui/camera_page.dart';
+
+
 import 'models/list_items.dart';
 import 'models/shopping_list.dart';
 import 'ui/items_screen.dart';
 import 'ui/shopping_list_dialog.dart';
+import 'util/dbhelper.dart';
 
-void main() => runApp(MyApp());
+Future<void> main() async {
+  // Ensure that plugin services are initialized so that `availableCameras()`
+  // can be called before `runApp()`
+  WidgetsFlutterBinding.ensureInitialized();
 
-class MyApp extends StatelessWidget {
-  ShoppingListDialog dialog = ShoppingListDialog();
+  // Obtain a list of the available cameras on the device.
+  final cameras = await availableCameras();
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Shoppping List',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: ShList());
-  }
+  // Get a specific camera from the list of available cameras.
+  final firstCamera = cameras.first;
+
+  runApp(
+    MaterialApp(
+      theme: ThemeData.dark(),
+      home:
+          // SaveNetImage(),
+          ShList(
+        camera: firstCamera,
+      ),
+    ),
+  );
 }
 
 class ShList extends StatefulWidget {
+  final CameraDescription camera;
+  final String imagePath;
+  const ShList({Key key, this.camera, this.imagePath}) : super(key: key);
   @override
   _ShListState createState() => _ShListState();
 }
 
 class _ShListState extends State<ShList> {
-  List<CattlePro> shoppingList;
+  List<ShoppingList> shoppingList;
   DbHelper helper = DbHelper();
   ShoppingListDialog dialog;
 
@@ -44,6 +62,20 @@ class _ShListState extends State<ShList> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Shopping List'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TakePictureScreen(
+                      camera: widget.camera,
+                    ),
+                  ),
+                );
+              },
+              icon: Icon(Icons.camera_alt))
+        ],
       ),
       body: ListView.builder(
           itemCount: (shoppingList != null) ? shoppingList.length : 0,
@@ -61,11 +93,13 @@ class _ShListState extends State<ShList> {
                 },
                 child: ListTile(
                     title: Text(shoppingList[index].name),
-                    subtitle: Text("Gender: ${shoppingList[index].gender}\nSpecies: ${shoppingList[index].species}"),
-                    // leading: 
-                    // CircleAvatar(
-                    //   child: Text("Gender: ${shoppingList[index].gender}\nSpecies: ${shoppingList[index].species}"),
-                    // ),
+                    subtitle: Text(
+                        "Gender: ${shoppingList[index].gender}\nSpecies: ${shoppingList[index].species}"),
+                    leading: CircleAvatar(
+                      child: widget.imagePath != null
+                          ? Image.file(File(widget.imagePath))
+                          : Container(),
+                    ),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -90,7 +124,7 @@ class _ShListState extends State<ShList> {
           showDialog(
             context: context,
             builder: (BuildContext context) =>
-                dialog.buildDialog(context, CattlePro(0, '','',''), true),
+                dialog.buildDialog(context, ShoppingList(0, '', '', ''), true),
           );
         },
         child: Icon(Icons.add),

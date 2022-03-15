@@ -8,7 +8,7 @@ class ShoppingListDialog {
   final txtSpecies = TextEditingController();
   final txtPriority = TextEditingController();
 
-  Widget buildDialog(BuildContext context, CattlePro list, bool isNew) {
+  Widget buildDialog(BuildContext context, ShoppingList list, bool isNew) {
     DbHelper helper = DbHelper();
     if (!isNew) {
       txtName.text = list.name;
@@ -23,7 +23,7 @@ class ShoppingListDialog {
           child: Column(children: <Widget>[
             TextField(
                 controller: txtName,
-                decoration: InputDecoration(hintText: 'Shopping List Name')),
+                decoration: InputDecoration(hintText: 'Name')),
             TextField(
                 controller: txtGender,
                 decoration: InputDecoration(hintText: 'Gender')),
