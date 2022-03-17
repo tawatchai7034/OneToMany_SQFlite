@@ -105,7 +105,7 @@ class _ShListState extends State<ShList> {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                ItemsScreen(shoppingList[index])),
+                                ItemsScreen(shoppingList[index],widget.camera,widget.imagePath)),
                       );
                     },
                     trailing: IconButton(

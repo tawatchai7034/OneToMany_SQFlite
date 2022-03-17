@@ -1,5 +1,7 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:one_to_many_sqf/ui/camera_page.dart';
 import '../models/list_items.dart';
 import '../util/dbhelper.dart';
 
@@ -11,10 +13,10 @@ class ListItemDialog {
   final txtHearLenghtTop = TextEditingController();
   final txtPixelReference = TextEditingController();
   final txtDistanceReference = TextEditingController();
-  final txtQuantity = TextEditingController();
-  final txtNote = TextEditingController();
+  // final txtQuantity = TextEditingController();
+  // final txtNote = TextEditingController();
 
-  Widget buildAlert(BuildContext context, ListItem item, bool isNew) {
+  Widget buildAlert(BuildContext context, ListItem item, bool isNew,String imagePath) {
     print(item);
     DbHelper helper = DbHelper();
     helper.openDb();
@@ -26,8 +28,8 @@ class ListItemDialog {
       txtHearLenghtTop.text = item.hearLenghtTop.toString();
       txtPixelReference.text = item.pixelReference.toString();
       txtDistanceReference.text = item.distanceReference.toString();
-      txtQuantity.text = item.quantity;
-      txtNote.text = item.note;
+      // txtQuantity.text = item.quantity;
+      // txtNote.text = item.note;
     }
     return AlertDialog(
       title: Text((isNew) ? 'New shopping item' : 'Edit shopping item'),
@@ -62,14 +64,14 @@ class ListItemDialog {
                 controller: txtDistanceReference,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(hintText: 'Distance Reference')),
-            TextField(
-              controller: txtQuantity,
-              decoration: InputDecoration(hintText: 'Quantity'),
-            ),
-            TextField(
-              controller: txtNote,
-              decoration: InputDecoration(hintText: 'Note'),
-            ),
+            // TextField(
+            //   controller: txtQuantity,
+            //   decoration: InputDecoration(hintText: 'Quantity'),
+            // ),
+            // TextField(
+            //   controller: txtNote,
+            //   decoration: InputDecoration(hintText: 'Note'),
+            // ),
             RaisedButton(
                 child: Text('Save Item'),
                 onPressed: () {
@@ -80,12 +82,12 @@ class ListItemDialog {
                   item.hearLenghtTop = double.parse(txtHearLenghtTop.text);
                   item.pixelReference = double.parse(txtPixelReference.text);
                   item.distanceReference = double.parse(txtDistanceReference.text);
-                  item.imageSide = 'image side';
-                  item.imageSide = 'image rear';
-                  item.imageSide = 'image top';
+                  item.imageSide = imagePath;
+                  item.imageSide = imagePath;
+                  item.imageSide = imagePath;
                   item.date = DateTime.now().toIso8601String();
-                  item.quantity = txtQuantity.text;
-                  item.note = txtNote.text;
+                  // item.quantity = txtQuantity.text;
+                  // item.note = txtNote.text;
                   helper.insertItem(item);
                   Navigator.pop(context);
                 },

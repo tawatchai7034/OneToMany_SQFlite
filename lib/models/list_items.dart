@@ -12,8 +12,8 @@ class ListItem {
   String imageRear;
   String imageTop;
   String date;
-  String quantity;
-  String note;
+  // String quantity;
+  // String note;
 
   ListItem(
     this.id,
@@ -29,8 +29,8 @@ class ListItem {
     this.imageRear,
     this.imageTop,
     this.date,
-    this.quantity,
-    this.note,
+    // this.quantity,
+    // this.note,
   );
 
   Map<String, dynamic> toMap() {
@@ -48,8 +48,8 @@ class ListItem {
       'imageRear': imageRear,
       'imageTop': imageTop,
       'date': date,
-      'quantity': quantity,
-      'note': note
+      // 'quantity': quantity,
+      // 'note': note
     };
   }
 }

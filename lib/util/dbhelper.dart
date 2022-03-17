@@ -34,9 +34,10 @@ class DbHelper {
             database.execute(
                 'CREATE TABLE lists(id INTEGER PRIMARY KEY, name TEXT, gender TEXT, species TEXT)');
             database.execute(
-                'CREATE TABLE items(id INTEGER PRIMARY KEY, idList INTEGER,bodyLenght REAL,heartGirth REAL,hearLenghtSide REAL,hearLenghtRear REAL,hearLenghtTop REAL,pixelReference REAL,distanceReference REAL,imageSide TEXT, imageRear TEXT, imageTop TEXT,date TEXT, quantity TEXT, note TEXT, ' +
+                'CREATE TABLE items(id INTEGER PRIMARY KEY, idList INTEGER,bodyLenght REAL,heartGirth REAL,hearLenghtSide REAL,hearLenghtRear REAL,hearLenghtTop REAL,pixelReference REAL,distanceReference REAL,imageSide TEXT, imageRear TEXT, imageTop TEXT,date TEXT, ' +
                     'FOREIGN KEY(idList) REFERENCES lists(id))');
           }, version: version);
+          //  quantity TEXT, note TEXT,
     }
     return db;
   }
@@ -89,8 +90,8 @@ class DbHelper {
         maps[i]['imageRear'],
         maps[i]['imageTop'],
         maps[i]['date'],
-        maps[i]['quantity'],
-        maps[i]['note'],
+        // maps[i]['quantity'],
+        // maps[i]['note'],
       );
     });
   }
