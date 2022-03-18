@@ -38,6 +38,7 @@ dependencies:
   path: ^1.8.0
   sqflite: ^2.0.2
   camera:
+  image_picker:
 
 dev_dependencies:
   flutter_test:

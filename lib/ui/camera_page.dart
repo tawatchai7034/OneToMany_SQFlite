@@ -1,18 +1,26 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+
 import 'package:one_to_many_sqf/main.dart';
+import 'package:one_to_many_sqf/models/photo.dart';
+import 'package:one_to_many_sqf/models/utility.dart';
+import 'package:one_to_many_sqf/saveImage.dart';
+import 'package:one_to_many_sqf/util/helper.dart';
 
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
   const TakePictureScreen({
     Key? key,
     required this.camera,
+    required this.onCallback,
   }) : super(key: key);
 
   final CameraDescription camera;
+  final VoidCallback onCallback;
 
   @override
   TakePictureScreenState createState() => TakePictureScreenState();
@@ -99,11 +107,41 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 }
 
 // A widget that displays the picture taken by the user.
-class DisplayPictureScreen extends StatelessWidget {
+class DisplayPictureScreen extends StatefulWidget {
   final String imagePath;
+  // final int imgLength;
 
-  const DisplayPictureScreen({Key? key, required this.imagePath})
-      : super(key: key);
+  const DisplayPictureScreen({
+    Key? key,
+    required this.imagePath,
+    // required this.imgLength,
+  }) : super(key: key);
+
+  @override
+  State<DisplayPictureScreen> createState() => _DisplayPictureScreenState();
+}
+
+class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
+  late DBHelper dbHelper;
+  late List<Photo> images;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    dbHelper = DBHelper();
+    images = [];
+    refreshImages();
+    super.initState();
+  }
+
+  refreshImages() {
+    dbHelper.getPhotos().then((imgs) {
+      setState(() {
+        images.clear();
+        images.addAll(imgs);
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,11 +150,18 @@ class DisplayPictureScreen extends StatelessWidget {
         title: const Text('Display the Picture'),
         actions: [
           TextButton(
-              onPressed: () {
+              onPressed: () async {
+                final file = File(widget.imagePath);
+                String imgString = Utility.base64String(file.readAsBytesSync());
+                Photo photo = Photo(images.length, imgString);
+                DBHelper dbhelper;
+                await dbHelper.save(photo);
+                refreshImages();
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ShList(imagePath: imagePath)),
+                      builder: (context) =>
+                          ShList(imagePath: widget.imagePath)),
                   (Route<dynamic> route) => false,
                 );
               },
@@ -125,7 +170,7 @@ class DisplayPictureScreen extends StatelessWidget {
       ),
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
-      body: Image.file(File(imagePath)),
+      body: Image.file(File(widget.imagePath)),
     );
   }
 }

@@ -4,9 +4,9 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:one_to_many_sqf/saveImage.dart';
 
 import 'package:one_to_many_sqf/ui/camera_page.dart';
-
 
 import 'models/list_items.dart';
 import 'models/shopping_list.dart';
@@ -63,18 +63,30 @@ class _ShListState extends State<ShList> {
       appBar: AppBar(
         title: Text('Shopping List'),
         actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TakePictureScreen(
-                      camera: widget.camera,
-                    ),
-                  ),
-                );
-              },
-              icon: Icon(Icons.camera_alt))
+          Row(
+            children: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TakePictureScreen(
+                          camera: widget.camera,
+                          onCallback: (){},
+                        ),
+                      ),
+                    );
+                  },
+                  icon: Icon(Icons.camera_alt)),
+              SizedBox(height: 16),
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SaveImage(camera: widget.camera,)));
+                  },
+                  icon: Icon(Icons.photo))
+            ],
+          )
         ],
       ),
       body: ListView.builder(
@@ -104,8 +116,10 @@ class _ShListState extends State<ShList> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                ItemsScreen(shoppingList[index],widget.camera,widget.imagePath)),
+                            builder: (context) => ItemsScreen(
+                                shoppingList[index],
+                                widget.camera,
+                                widget.imagePath)),
                       );
                     },
                     trailing: IconButton(
