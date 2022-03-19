@@ -3,7 +3,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:one_to_many_sqf/ui/imageCart.dart';
+import 'package:one_to_many_sqf/ui/imageCard.dart';
 import '../models/list_items.dart';
 import '../models/shopping_list.dart';
 import '../util/dbhelper.dart';
@@ -50,21 +50,9 @@ class _ItemsScreenState extends State<ItemsScreen> {
           itemBuilder: (BuildContext context, int index) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
-              child: CartImage(
+              child: CardImage(
                 imagePath: widget.imagePath,
                 items: items[index],
-                // onEditCallback: () {
-                //   showDialog(
-                //     context: context,
-                //     builder: (BuildContext context) => dialog.buildAlert(
-                //         context,
-                //         ListItem(0, this.shoppingList.id, 0, 0, 0, 0, 0, 0, 0,
-                //             '', '', '', DateTime.now().toIso8601String(), ''),
-                //         true,
-                //         widget.imagePath),
-                //   );
-                // },
-                // onDeleteCallback: (){},
               ),
             );
             // Dismissible(

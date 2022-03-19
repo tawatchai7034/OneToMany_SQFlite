@@ -87,7 +87,7 @@ class ListItemDialog {
                   item.imageSide = imagePath;
                   item.date = DateTime.now().toIso8601String();
                   // item.quantity = txtQuantity.text;
-                  // item.note = txtNote.text;
+                  item.note = txtNote.text;
                   helper.insertItem(item);
                   Navigator.pop(context);
                 },
