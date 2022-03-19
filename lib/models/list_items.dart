@@ -13,7 +13,7 @@ class ListItem {
   String imageTop;
   String date;
   // String quantity;
-  // String note;
+  String note;
 
   ListItem(
     this.id,
@@ -30,7 +30,7 @@ class ListItem {
     this.imageTop,
     this.date,
     // this.quantity,
-    // this.note,
+    this.note,
   );
 
   Map<String, dynamic> toMap() {
@@ -49,7 +49,7 @@ class ListItem {
       'imageTop': imageTop,
       'date': date,
       // 'quantity': quantity,
-      // 'note': note
+      'note': note
     };
   }
 }

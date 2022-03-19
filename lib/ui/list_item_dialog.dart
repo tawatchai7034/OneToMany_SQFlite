@@ -14,7 +14,7 @@ class ListItemDialog {
   final txtPixelReference = TextEditingController();
   final txtDistanceReference = TextEditingController();
   // final txtQuantity = TextEditingController();
-  // final txtNote = TextEditingController();
+  final txtNote = TextEditingController();
 
   Widget buildAlert(BuildContext context, ListItem item, bool isNew,String imagePath) {
     print(item);
@@ -29,7 +29,7 @@ class ListItemDialog {
       txtPixelReference.text = item.pixelReference.toString();
       txtDistanceReference.text = item.distanceReference.toString();
       // txtQuantity.text = item.quantity;
-      // txtNote.text = item.note;
+      txtNote.text = item.note;
     }
     return AlertDialog(
       title: Text((isNew) ? 'New shopping item' : 'Edit shopping item'),
@@ -68,10 +68,10 @@ class ListItemDialog {
             //   controller: txtQuantity,
             //   decoration: InputDecoration(hintText: 'Quantity'),
             // ),
-            // TextField(
-            //   controller: txtNote,
-            //   decoration: InputDecoration(hintText: 'Note'),
-            // ),
+            TextField(
+              controller: txtNote,
+              decoration: InputDecoration(hintText: 'Note'),
+            ),
             RaisedButton(
                 child: Text('Save Item'),
                 onPressed: () {

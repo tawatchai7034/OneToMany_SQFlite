@@ -1,4 +1,5 @@
 // @dart=2.9
+import 'package:one_to_many_sqf/models/photo.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import '../models/list_items.dart';
@@ -34,8 +35,10 @@ class DbHelper {
             database.execute(
                 'CREATE TABLE lists(id INTEGER PRIMARY KEY, name TEXT, gender TEXT, species TEXT)');
             database.execute(
-                'CREATE TABLE items(id INTEGER PRIMARY KEY, idList INTEGER,bodyLenght REAL,heartGirth REAL,hearLenghtSide REAL,hearLenghtRear REAL,hearLenghtTop REAL,pixelReference REAL,distanceReference REAL,imageSide TEXT, imageRear TEXT, imageTop TEXT,date TEXT, ' +
+                'CREATE TABLE items(id INTEGER PRIMARY KEY, idList INTEGER,bodyLenght REAL,heartGirth REAL,hearLenghtSide REAL,hearLenghtRear REAL,hearLenghtTop REAL,pixelReference REAL,distanceReference REAL,imageSide TEXT, imageRear TEXT, imageTop TEXT,date TEXT,note TEXT ' +
                     'FOREIGN KEY(idList) REFERENCES lists(id))');
+            database.execute(
+                'CREATE TABLE photos(id INTEGER PRIMARY KEY,idPro INTEGER,idTime INTEGER, photo_name TEXT, gender TEXT, species TEXT)'+'FOREIGN KEY(idPro) REFERENCES lists(id))'+'FOREIGN KEY(idTime) REFERENCES items(id))');
           }, version: version);
           //  quantity TEXT, note TEXT,
     }
@@ -91,7 +94,7 @@ class DbHelper {
         maps[i]['imageTop'],
         maps[i]['date'],
         // maps[i]['quantity'],
-        // maps[i]['note'],
+        maps[i]['note'],
       );
     });
   }
@@ -109,4 +112,35 @@ class DbHelper {
     return result;
   }
 
+  // helper of images for  
+  Future<Photo> save(Photo employee) async {
+    var dbClient = await db;
+    employee.id = await dbClient.insert("photos", employee.toMap());
+    return employee;
+  }
+
+   Future<int> delete(Photo employee) async {
+    var dbClient = await db;
+    int result = await dbClient.delete('photos',where: "id = ?", whereArgs: [employee.id]);
+    return result;
+  }
+
+  Future<List<Photo>> getPhotos() async {
+    var dbClient = await db;
+    List<Map<String, Object>> maps = await dbClient.query("photos", columns: ["id", "photo_name"]);
+    List<Photo> employees = [];
+
+    if (maps.length > 0) {
+      for (int i = 0; i < maps.length; i++) {
+        
+        employees.add(Photo.fromMap(maps[i]));
+      }
+    }
+    return employees;
+  }
+
+  Future close() async {
+    var dbClient = await db;
+    dbClient.close();
+  }
 }

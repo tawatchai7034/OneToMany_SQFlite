@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:one_to_many_sqf/ui/imageCart.dart';
 import '../models/list_items.dart';
 import '../models/shopping_list.dart';
 import '../util/dbhelper.dart';
@@ -47,38 +48,58 @@ class _ItemsScreenState extends State<ItemsScreen> {
       body: ListView.builder(
           itemCount: (items != null) ? items.length : 0,
           itemBuilder: (BuildContext context, int index) {
-            return Dismissible(
-              key: Key(items[index].date),
-              onDismissed: (direction) {
-                String strName = items[index].date;
-                helper.deleteItem(items[index]);
-                setState(() {
-                  items.removeAt(index);
-                });
-                Scaffold.of(context).showSnackBar(
-                    SnackBar(content: Text("Item $strName deleted")));
-              },
-              child: ListTile(
-                title: Text(items[index].date),
-                // subtitle: Text(
-                //     'Quantity: ${items[index].quantity} - Note:  ${items[index].note}'),
-                leading: CircleAvatar(
-                  child: widget.imagePath != null
-                      ? Image.file(File(items[index].imageSide))
-                      : Container(),
-                ),
-                onTap: () {},
-                trailing: IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) => dialog.buildAlert(
-                            context, items[index], false, ''));
-                  },
-                ),
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CartImage(
+                imagePath: widget.imagePath,
+                items: items[index],
+                // onEditCallback: () {
+                //   showDialog(
+                //     context: context,
+                //     builder: (BuildContext context) => dialog.buildAlert(
+                //         context,
+                //         ListItem(0, this.shoppingList.id, 0, 0, 0, 0, 0, 0, 0,
+                //             '', '', '', DateTime.now().toIso8601String(), ''),
+                //         true,
+                //         widget.imagePath),
+                //   );
+                // },
+                // onDeleteCallback: (){},
               ),
             );
+            // Dismissible(
+            //   key: Key(items[index].date),
+            //   onDismissed: (direction) {
+            //     String strName = items[index].date;
+            //     helper.deleteItem(items[index]);
+            //     setState(() {
+            //       items.removeAt(index);
+            //     });
+            //     Scaffold.of(context).showSnackBar(
+            //         SnackBar(content: Text("Item $strName deleted")));
+            //   },
+            //   child:
+            //   ListTile(
+            //     title: Text(items[index].date),
+            //     // subtitle: Text(
+            //     //     'Quantity: ${items[index].quantity} - Note:  ${items[index].note}'),
+            //     leading: CircleAvatar(
+            //       child: widget.imagePath != null
+            //           ? Image.file(File(widget.imagePath))
+            //           : IconButton(onPressed: (){}, icon: Icon(Icons.add_a_photo),iconSize: 24,),
+            //     ),
+            //     onTap: () {},
+            //     trailing: IconButton(
+            //       icon: Icon(Icons.edit),
+            //       onPressed: () {
+            //         showDialog(
+            //             context: context,
+            //             builder: (BuildContext context) => dialog.buildAlert(
+            //                 context, items[index], false, ''));
+            //       },
+            //     ),
+            //   ),
+            // );
           }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -87,7 +108,7 @@ class _ItemsScreenState extends State<ItemsScreen> {
             builder: (BuildContext context) => dialog.buildAlert(
                 context,
                 ListItem(0, this.shoppingList.id, 0, 0, 0, 0, 0, 0, 0, '', '',
-                    '', DateTime.now().toIso8601String()),
+                    '', DateTime.now().toIso8601String(), ''),
                 true,
                 widget.imagePath),
           );
