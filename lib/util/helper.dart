@@ -5,9 +5,11 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'dart:io' as io;
 
-class DBHelper {
+class DBHelperImage {
   static Database? _db;
   static const String ID = 'id';
+  static const String IDPRO = 'id';
+  static const String IDTIME = 'id';
   static const String NAME = 'photo_name';
   static const String TABLE = 'PhotosTable';
   static const String DB_NAME = 'photos.db';
@@ -28,7 +30,7 @@ class DBHelper {
   }
 
   _onCreate(Database db, int version) async {
-    await db.execute("CREATE TABLE $TABLE ($ID INTEGER, $NAME TEXT)");
+    await db.execute("CREATE TABLE $TABLE ($ID INTEGER PRIMARY KEY,$IDPRO INTEGER,$IDTIME INTEGER, $NAME TEXT)");
   }
 
   Future<Photo> save(Photo employee) async {
@@ -41,6 +43,20 @@ class DBHelper {
     var dbClient = await db;
     int result = await dbClient.delete('$TABLE',where: "id = ?", whereArgs: [employee.id]);
     return result;
+  }
+
+    Future<List<Photo>> showSinglePhoto(int id) async {
+    var dbClient = await db;
+    List<Map<String, Object?>> maps = await dbClient.query(TABLE, columns: [ID,IDPRO,IDTIME,NAME],where: "id = ?",whereArgs:[id]);
+  
+    List<Photo> employees = [];
+    if (maps.length > 0) {
+      for (int i = 0; i < maps.length; i++) {
+        
+        employees.add(Photo.fromMap(maps[i]));
+      }
+    }
+    return employees;
   }
 
   Future<List<Photo>> getPhotos() async {

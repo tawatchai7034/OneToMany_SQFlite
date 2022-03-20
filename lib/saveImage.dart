@@ -28,7 +28,7 @@ class SaveImage extends StatefulWidget {
 class _SaveImageState extends State<SaveImage> {
   late Future<File> imageFile;
   late Image image;
-  late DBHelper dbHelper;
+  late DBHelperImage dbHelper;
   late List<Photo> images;
   final ImagePicker _picker = ImagePicker();
 
@@ -36,7 +36,7 @@ class _SaveImageState extends State<SaveImage> {
   void initState() {
     super.initState();
     images = [];
-    dbHelper = DBHelper();
+    dbHelper = DBHelperImage();
     refreshImages();
   }
 

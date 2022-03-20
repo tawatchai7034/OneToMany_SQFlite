@@ -111,36 +111,4 @@ class DbHelper {
         "items", where: "id = ?", whereArgs: [Item.id]);
     return result;
   }
-
-  // helper of images for  
-  Future<Photo> save(Photo employee) async {
-    var dbClient = await db;
-    employee.id = await dbClient.insert("photos", employee.toMap());
-    return employee;
-  }
-
-   Future<int> delete(Photo employee) async {
-    var dbClient = await db;
-    int result = await dbClient.delete('photos',where: "id = ?", whereArgs: [employee.id]);
-    return result;
-  }
-
-  Future<List<Photo>> getPhotos() async {
-    var dbClient = await db;
-    List<Map<String, Object>> maps = await dbClient.query("photos", columns: ["id", "photo_name"]);
-    List<Photo> employees = [];
-
-    if (maps.length > 0) {
-      for (int i = 0; i < maps.length; i++) {
-        
-        employees.add(Photo.fromMap(maps[i]));
-      }
-    }
-    return employees;
-  }
-
-  Future close() async {
-    var dbClient = await db;
-    dbClient.close();
-  }
 }
