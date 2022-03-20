@@ -10,10 +10,12 @@ import 'package:one_to_many_sqf/ui/list_item_dialog.dart';
 class CardImage extends StatefulWidget {
   final String imagePath;
   final ListItem items;
+  final VoidCallback onCallback;
   const CardImage({
     Key? key,
     required this.imagePath,
     required this.items,
+    required this.onCallback,
   }) : super(key: key);
 
   @override
@@ -42,7 +44,10 @@ class _CardImageState extends State<CardImage> {
                   child:
                       Image.file(File(widget.imagePath), fit: BoxFit.fitHeight))
               : IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    widget.onCallback;
+                    print("ok");
+                  },
                   icon: Icon(Icons.add_a_photo),
                   iconSize: 48,
                   color: Colors.grey,

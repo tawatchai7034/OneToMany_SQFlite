@@ -73,6 +73,8 @@ class _ShListState extends State<ShList> {
                         builder: (context) => TakePictureScreen(
                           camera: widget.camera,
                           onCallback: (){},
+                          idPro: 0,
+                          idTime: 0,
                         ),
                       ),
                     );
@@ -116,10 +118,10 @@ class _ShListState extends State<ShList> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ItemsScreen(
-                                shoppingList[index],
-                                widget.camera,
-                                widget.imagePath)),
+                            builder: (context) => CatTimeScreen(
+                                shoppingList: shoppingList[index],
+                                camera: widget.camera,
+                                imagePath: widget.imagePath)),
                       );
                     },
                     trailing: IconButton(

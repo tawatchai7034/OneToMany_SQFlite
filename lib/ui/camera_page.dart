@@ -17,10 +17,14 @@ class TakePictureScreen extends StatefulWidget {
     Key? key,
     required this.camera,
     required this.onCallback,
+    required this.idPro,
+    required this.idTime,
   }) : super(key: key);
 
   final CameraDescription camera;
   final VoidCallback onCallback;
+  final int idPro;
+  final int idTime;
 
   @override
   TakePictureScreenState createState() => TakePictureScreenState();
@@ -89,10 +93,11 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             await Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => DisplayPictureScreen(
-                  // Pass the automatically generated path to
-                  // the DisplayPictureScreen widget.
-                  imagePath: image.path,
-                ),
+                    // Pass the automatically generated path to
+                    // the DisplayPictureScreen widget.
+                    imagePath: image.path,
+                    idPro: widget.idPro,
+                    idTime: widget.idTime),
               ),
             );
           } catch (e) {
@@ -109,12 +114,15 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 // A widget that displays the picture taken by the user.
 class DisplayPictureScreen extends StatefulWidget {
   final String imagePath;
+  final int idPro;
+  final int idTime;
   // final int imgLength;
 
   const DisplayPictureScreen({
     Key? key,
     required this.imagePath,
-    // required this.imgLength,
+    required this.idPro,
+    required this.idTime,
   }) : super(key: key);
 
   @override
@@ -153,7 +161,8 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
               onPressed: () async {
                 final file = File(widget.imagePath);
                 String imgString = Utility.base64String(file.readAsBytesSync());
-                Photo photo = Photo(images.length, imgString);
+                Photo photo = Photo(
+                    images.length, widget.idPro, widget.idTime, imgString);
                 DBHelper dbhelper;
                 await dbHelper.save(photo);
                 refreshImages();
