@@ -6,11 +6,9 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 import 'package:one_to_many_sqf/main.dart';
-import 'package:one_to_many_sqf/models/list_items.dart';
 import 'package:one_to_many_sqf/models/photo.dart';
 import 'package:one_to_many_sqf/models/utility.dart';
 import 'package:one_to_many_sqf/saveImage.dart';
-import 'package:one_to_many_sqf/util/dbhelper.dart';
 import 'package:one_to_many_sqf/util/helper.dart';
 
 // A screen that allows users to take a picture using a given camera.
@@ -132,15 +130,13 @@ class DisplayPictureScreen extends StatefulWidget {
 }
 
 class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
-  late DBHelperImage dbHelper;
-  late DbHelper db_cat;
+  late DBHelper dbHelper;
   late List<Photo> images;
 
   @override
   void initState() {
     // TODO: implement initState
-    dbHelper = DBHelperImage();
-    db_cat =  DbHelper();
+    dbHelper = DBHelper();
     images = [];
     refreshImages();
     super.initState();
@@ -167,11 +163,8 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                 String imgString = Utility.base64String(file.readAsBytesSync());
                 Photo photo = Photo(
                     images.length, widget.idPro, widget.idTime, imgString);
-                // DBHelperImage dbhelper;
-                // DbHelper db_cat;
+                DBHelper dbhelper;
                 await dbHelper.save(photo);
-                await db_cat.insertItem(ListItem(widget.idTime, widget.idPro, 0, 0, 0, 0, 0, 0, 0, '${images.length.toString()}', '',
-                    '', DateTime.now().toIso8601String(), ''),);
                 refreshImages();
                 Navigator.pushAndRemoveUntil(
                   context,

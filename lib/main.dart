@@ -65,21 +65,22 @@ class _ShListState extends State<ShList> {
         actions: [
           Row(
             children: [
-              // IconButton(
-              //     onPressed: () {
-              //       Navigator.push(
-              //         context,
-              //         MaterialPageRoute(
-              //           builder: (context) => TakePictureScreen(
-              //             camera: widget.camera,
-              //             onCallback: (){},
-              //             idPro: 0,
-              //             idTime: 0,
-              //           ),
-              //         ),
-              //       );
-              //     },
-              //     icon: Icon(Icons.camera_alt)),
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TakePictureScreen(
+                          camera: widget.camera,
+                          onCallback: (){},
+                          idPro: 0,
+                          idTime: 0,
+                        ),
+                      ),
+                    );
+                  },
+                  icon: Icon(Icons.camera_alt)),
+              SizedBox(height: 16),
               IconButton(
                   onPressed: () {
                     Navigator.push(context,

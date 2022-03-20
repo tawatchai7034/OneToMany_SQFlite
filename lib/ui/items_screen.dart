@@ -1,13 +1,12 @@
+
 import 'dart:async';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:one_to_many_sqf/models/photo.dart';
 
 import 'package:one_to_many_sqf/ui/camera_page.dart';
 import 'package:one_to_many_sqf/ui/imageCard.dart';
-import 'package:one_to_many_sqf/util/helper.dart';
 
 import '../models/list_items.dart';
 import '../models/shopping_list.dart';
@@ -155,25 +154,12 @@ class _CatTimeScreenState extends State<CatTimeScreen> {
   DbHelper helper = DbHelper();
   List<ListItem>? items;
   late ListItemDialog dialog;
-  late DBHelperImage dbHelper;
-  late List<Photo> images;
 
   @override
   void initState() {
     dialog = ListItemDialog();
     super.initState();
-    refreshImages();
   }
-
-  refreshImages() {
-    dbHelper.getPhotos().then((imgs) {
-      setState(() {
-        images.clear();
-        images.addAll(imgs);
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     helper = DbHelper();
@@ -188,20 +174,20 @@ class _CatTimeScreenState extends State<CatTimeScreen> {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: CardImage(
-                images: images[0],
+                imagePath: widget.imagePath,
                 items: items![index],
-                onCallback: () async {
+                onCallback: () async{
                   await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => TakePictureScreen(
-                        camera: widget.camera,
-                        onCallback: () {},
-                        idPro: widget.shoppingList.id,
-                        idTime: items![index].id,
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TakePictureScreen(
+                          camera: widget.camera,
+                          onCallback: (){},
+                          idPro: widget.shoppingList.id,
+                          idTime: items![index].id,
+                        ),
                       ),
-                    ),
-                  );
+                    );
                 },
               ),
             );

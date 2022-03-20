@@ -5,17 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'package:one_to_many_sqf/models/list_items.dart';
-import 'package:one_to_many_sqf/models/photo.dart';
-import 'package:one_to_many_sqf/models/utility.dart';
 import 'package:one_to_many_sqf/ui/list_item_dialog.dart';
 
 class CardImage extends StatefulWidget {
-  final Photo images;
+  final String imagePath;
   final ListItem items;
   final VoidCallback onCallback;
   const CardImage({
     Key? key,
-    required this.images,
+    required this.imagePath,
     required this.items,
     required this.onCallback,
   }) : super(key: key);
@@ -40,14 +38,15 @@ class _CardImageState extends State<CardImage> {
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: ListTile(
         title: Center(
-          child: widget.images != null
+          child: widget.imagePath != null
               ? Transform.rotate(
                   angle: angle,
                   child:
-                      Utility.imageFromBase64String(widget.images.photo_name))
+                      Image.file(File(widget.imagePath), fit: BoxFit.fitHeight))
               : IconButton(
                   onPressed: () {
-                    widget.onCallback();
+                    widget.onCallback;
+                    print("ok");
                   },
                   icon: Icon(Icons.add_a_photo),
                   iconSize: 48,
@@ -55,7 +54,7 @@ class _CardImageState extends State<CardImage> {
                 ),
         ),
         subtitle: ListTile(
-          title: Text("Date: ${dateString}\nImage pro id: ${widget.images.idPro}\nImage time id: ${widget.images.idTime}",
+          title: Text(dateString,
               style: TextStyle(
                 color: Colors.black,
               )),
