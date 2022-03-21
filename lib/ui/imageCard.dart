@@ -5,15 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'package:one_to_many_sqf/models/list_items.dart';
+import 'package:one_to_many_sqf/models/shopping_list.dart';
 import 'package:one_to_many_sqf/ui/list_item_dialog.dart';
 
 class CardImage extends StatefulWidget {
   final String imagePath;
+  final ShoppingList shoppingList;
   final ListItem items;
   final VoidCallback onCallback;
   const CardImage({
     Key? key,
     required this.imagePath,
+    required this.shoppingList,
     required this.items,
     required this.onCallback,
   }) : super(key: key);
@@ -45,7 +48,7 @@ class _CardImageState extends State<CardImage> {
                       Image.file(File(widget.imagePath), fit: BoxFit.fitHeight))
               : IconButton(
                   onPressed: () {
-                    widget.onCallback;
+                    widget.onCallback();
                     print("ok");
                   },
                   icon: Icon(Icons.add_a_photo),

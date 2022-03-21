@@ -129,7 +129,7 @@ class _ShListState extends State<ShList> {
                             builder: (context) => CatTimeScreen(
                                 shoppingList: shoppingList[index],
                                 camera: widget.camera,
-                                imagePath: widget.imagePath)),
+                                imagePath: null)),
                       );
                     },
                     trailing: IconButton(

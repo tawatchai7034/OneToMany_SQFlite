@@ -2,13 +2,19 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
+import 'package:one_to_many_sqf/models/list_items.dart';
+import 'package:one_to_many_sqf/models/shopping_list.dart';
 import 'package:one_to_many_sqf/ui/preview_screen.dart';
 
 class CapturesScreen extends StatefulWidget {
   final List<File> imageFileList;
+    final ShoppingList shoppingList;
+  final ListItem items;
   const CapturesScreen({
     Key? key,
     required this.imageFileList,
+    required this.shoppingList,
+    required this.items,
   }) : super(key: key);
 
   @override
@@ -55,6 +61,8 @@ class _CapturesScreenState extends State<CapturesScreen> {
                             builder: (context) => PreviewScreen(
                               fileList: widget.imageFileList,
                               imageFile: imageFile,
+                              shoppingList: widget.shoppingList,
+                              items: widget.items
                             ),
                           ),
                         );

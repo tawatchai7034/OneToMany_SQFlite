@@ -4,14 +4,25 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:one_to_many_sqf/ui/preview_screen.dart';
+import 'package:one_to_many_sqf/models/list_items.dart';
+import 'package:one_to_many_sqf/models/shopping_list.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:video_player/video_player.dart';
 
+import 'package:one_to_many_sqf/ui/preview_screen.dart';
+
 import '../main.dart';
 
 class CameraScreen extends StatefulWidget {
+  final ShoppingList shoppingList;
+  final ListItem items;
+  const CameraScreen({
+    Key? key,
+    required this.shoppingList,
+    required this.items,
+  }) : super(key: key);
+
   @override
   _CameraScreenState createState() => _CameraScreenState();
 }
@@ -554,7 +565,7 @@ class _CameraScreenState extends State<CameraScreen>
                                                 }
                                               }
                                             : () async {
-                                              // ****** picture ******
+                                                // ****** picture ******
                                                 XFile? rawImage =
                                                     await takePicture();
                                                 File imageFile =
@@ -577,6 +588,19 @@ class _CameraScreenState extends State<CameraScreen>
                                                   '${directory.path}/$currentUnix.$fileFormat',
                                                 );
 
+                                                Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        PreviewScreen(
+                                                      imageFile: _imageFile!,
+                                                      fileList: allFileList,
+                                                      shoppingList:
+                                                          widget.shoppingList,
+                                                      items: widget.items,
+                                                    ),
+                                                  ),
+                                                );
+                                                
                                                 refreshAlreadyCapturedImages();
                                                 // ****** picture ******
                                               },
@@ -618,6 +642,9 @@ class _CameraScreenState extends State<CameraScreen>
                                                         PreviewScreen(
                                                       imageFile: _imageFile!,
                                                       fileList: allFileList,
+                                                      shoppingList:
+                                                          widget.shoppingList,
+                                                      items: widget.items,
                                                     ),
                                                   ),
                                                 );

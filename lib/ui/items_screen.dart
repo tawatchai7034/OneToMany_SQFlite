@@ -6,6 +6,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 import 'package:one_to_many_sqf/ui/camera_page.dart';
+import 'package:one_to_many_sqf/ui/camera_screen.dart';
 import 'package:one_to_many_sqf/ui/imageCard.dart';
 
 import '../models/list_items.dart';
@@ -175,17 +176,13 @@ class _CatTimeScreenState extends State<CatTimeScreen> {
               padding: const EdgeInsets.all(8.0),
               child: CardImage(
                 imagePath: widget.imagePath,
+                shoppingList: widget.shoppingList,
                 items: items![index],
                 onCallback: () async{
                   await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => TakePictureScreen(
-                          camera: widget.camera,
-                          onCallback: (){},
-                          idPro: widget.shoppingList.id,
-                          idTime: items![index].id,
-                        ),
+                        builder: (context) => CameraScreen(shoppingList: widget.shoppingList,items: items![index]),
                       ),
                     );
                 },
