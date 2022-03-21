@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:one_to_many_sqf/saveImage.dart';
 
 import 'package:one_to_many_sqf/ui/camera_page.dart';
+import 'package:one_to_many_sqf/ui/camera_screen.dart';
 
 import 'models/list_items.dart';
 import 'models/shopping_list.dart';
@@ -14,27 +15,31 @@ import 'ui/items_screen.dart';
 import 'ui/shopping_list_dialog.dart';
 import 'util/dbhelper.dart';
 
+List<CameraDescription> cameras = [];
+
 Future<void> main() async {
-  // Ensure that plugin services are initialized so that `availableCameras()`
-  // can be called before `runApp()`
-  WidgetsFlutterBinding.ensureInitialized();
+  // Fetch the available cameras before initializing the app.
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
+    cameras = await availableCameras();
+  } on CameraException catch (e) {
+    print('Error in fetching the cameras: $e');
+  }
+  runApp(MyApp());
+}
 
-  // Obtain a list of the available cameras on the device.
-  final cameras = await availableCameras();
-
-  // Get a specific camera from the list of available cameras.
-  final firstCamera = cameras.first;
-
-  runApp(
-    MaterialApp(
-      theme: ThemeData.dark(),
-      home:
-          // SaveNetImage(),
-          ShList(
-        camera: firstCamera,
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
-    ),
-  );
+      debugShowCheckedModeBanner: false,
+      home: ShList(camera: cameras.first, imagePath: ''),
+    );
+  }
 }
 
 class ShList extends StatefulWidget {
@@ -69,22 +74,25 @@ class _ShListState extends State<ShList> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => TakePictureScreen(
-                          camera: widget.camera,
-                          onCallback: (){},
-                          idPro: 0,
-                          idTime: 0,
-                        ),
-                      ),
+                      MaterialPageRoute(builder: (context) => CameraScreen()
+                          // TakePictureScreen(
+                          //   camera: widget.camera,
+                          //   onCallback: (){},
+                          //   idPro: 0,
+                          //   idTime: 0,
+                          // ),
+                          ),
                     );
                   },
                   icon: Icon(Icons.camera_alt)),
               SizedBox(height: 16),
               IconButton(
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => SaveImage(camera: widget.camera,)));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SaveImage(
+                                camera: widget.camera, idPro: 0, idTime: 0)));
                   },
                   icon: Icon(Icons.photo))
             ],
@@ -109,11 +117,11 @@ class _ShListState extends State<ShList> {
                     title: Text(shoppingList[index].name),
                     subtitle: Text(
                         "Gender: ${shoppingList[index].gender}\nSpecies: ${shoppingList[index].species}"),
-                    leading: CircleAvatar(
-                      child: widget.imagePath != null
-                          ? Image.file(File(widget.imagePath))
-                          : Container(),
-                    ),
+                    // leading: CircleAvatar(
+                    //   child: widget.imagePath != null
+                    //       ? Image.file(File(widget.imagePath))
+                    //       : Container(),
+                    // ),
                     onTap: () {
                       Navigator.push(
                         context,

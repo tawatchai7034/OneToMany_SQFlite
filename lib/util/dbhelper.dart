@@ -1,11 +1,37 @@
 // @dart=2.9
 import 'package:one_to_many_sqf/models/photo.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import '../models/list_items.dart';
 import '../models/shopping_list.dart';
+import 'dart:io' as io;
 
 class DbHelper {
+  // static Database? _db;
+  // Future<Database> get db async {
+  //   if (null != _db) {
+  //     return _db!;
+  //   }
+  //   _db = await initDb();
+  //   return _db!;
+  // }
+
+  // initDb() async {
+  //   io.Directory documentsDirectory = await getApplicationDocumentsDirectory();
+  //   String path = join(documentsDirectory.path, "shopping.db");
+  //   var db = await openDatabase(path, version: 1, onCreate: _onCreate);
+  //   return db;
+  // }
+
+  // _onCreate(Database db, int version) async {
+  //   await db.execute(
+  //       'CREATE TABLE lists(id INTEGER PRIMARY KEY, name TEXT, gender TEXT, species TEXT)');
+  //   await db.execute(
+  //       'CREATE TABLE items(id INTEGER PRIMARY KEY, idList INTEGER,bodyLenght REAL,heartGirth REAL,hearLenghtSide REAL,hearLenghtRear REAL,hearLenghtTop REAL,pixelReference REAL,distanceReference REAL,imageSide TEXT, imageRear TEXT, imageTop TEXT,date TEXT,note TEXT ' +
+  //           'FOREIGN KEY(idList) REFERENCES lists(id))');
+  // }
+
   final int version = 1;
   Database db;
 
@@ -32,25 +58,23 @@ class DbHelper {
     if (db == null) {
       db = await openDatabase(join(await getDatabasesPath(), 'shopping.db'),
           onCreate: (database, version) {
-            database.execute(
-                'CREATE TABLE lists(id INTEGER PRIMARY KEY, name TEXT, gender TEXT, species TEXT)');
-            database.execute(
-                'CREATE TABLE items(id INTEGER PRIMARY KEY, idList INTEGER,bodyLenght REAL,heartGirth REAL,hearLenghtSide REAL,hearLenghtRear REAL,hearLenghtTop REAL,pixelReference REAL,distanceReference REAL,imageSide TEXT, imageRear TEXT, imageTop TEXT,date TEXT,note TEXT ' +
-                    'FOREIGN KEY(idList) REFERENCES lists(id))');
-            database.execute(
-                'CREATE TABLE photos(id INTEGER PRIMARY KEY,idPro INTEGER,idTime INTEGER, photo_name TEXT, gender TEXT, species TEXT)'+'FOREIGN KEY(idPro) REFERENCES lists(id))'+'FOREIGN KEY(idTime) REFERENCES items(id))');
-          }, version: version);
-          //  quantity TEXT, note TEXT,
+        database.execute(
+            'CREATE TABLE lists(id INTEGER PRIMARY KEY, name TEXT, gender TEXT, species TEXT)');
+        database.execute(
+            'CREATE TABLE items(id INTEGER PRIMARY KEY, idList INTEGER,bodyLenght REAL,heartGirth REAL,hearLenghtSide REAL,hearLenghtRear REAL,hearLenghtTop REAL,pixelReference REAL,distanceReference REAL,imageSide TEXT, imageRear TEXT, imageTop TEXT,date TEXT,note TEXT ' +
+                'FOREIGN KEY(idList) REFERENCES lists(id))');
+      }, version: version);
+      //  quantity TEXT, note TEXT,
     }
     return db;
   }
 
   Future<int> insertList(ShoppingList list) async {
     int id = await this.db.insert(
-      'lists',
-      list.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+          'lists',
+          list.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
     return id;
   }
 
@@ -76,8 +100,8 @@ class DbHelper {
   }
 
   Future<List<ListItem>> getItems(int idList) async {
-    final List<Map<String, dynamic>> maps =
-    await db.query('items', where: 'idList = ?', whereArgs: [idList],orderBy: "date DESC");
+    final List<Map<String, dynamic>> maps = await db.query('items',
+        where: 'idList = ?', whereArgs: [idList], orderBy: "date DESC");
     return List.generate(maps.length, (i) {
       return ListItem(
         maps[i]['id'],
@@ -100,47 +124,15 @@ class DbHelper {
   }
 
   Future<int> deleteList(ShoppingList list) async {
-    int result = await db.delete(
-        "items", where: "idList = ?", whereArgs: [list.id]);
+    int result =
+        await db.delete("items", where: "idList = ?", whereArgs: [list.id]);
     result = await db.delete("lists", where: "id = ?", whereArgs: [list.id]);
     return result;
   }
 
-    Future<int> deleteItem(ListItem Item) async {
-    int result = await db.delete(
-        "items", where: "id = ?", whereArgs: [Item.id]);
+  Future<int> deleteItem(ListItem Item) async {
+    int result =
+        await db.delete("items", where: "id = ?", whereArgs: [Item.id]);
     return result;
-  }
-
-  // helper of images for  
-  Future<Photo> save(Photo employee) async {
-    var dbClient = await db;
-    employee.id = await dbClient.insert("photos", employee.toMap());
-    return employee;
-  }
-
-   Future<int> delete(Photo employee) async {
-    var dbClient = await db;
-    int result = await dbClient.delete('photos',where: "id = ?", whereArgs: [employee.id]);
-    return result;
-  }
-
-  Future<List<Photo>> getPhotos() async {
-    var dbClient = await db;
-    List<Map<String, Object>> maps = await dbClient.query("photos", columns: ["id", "photo_name"]);
-    List<Photo> employees = [];
-
-    if (maps.length > 0) {
-      for (int i = 0; i < maps.length; i++) {
-        
-        employees.add(Photo.fromMap(maps[i]));
-      }
-    }
-    return employees;
-  }
-
-  Future close() async {
-    var dbClient = await db;
-    dbClient.close();
   }
 }

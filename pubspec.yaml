@@ -40,6 +40,8 @@ dependencies:
   camera:
   image_picker:
   intl:
+  permission_handler:
+  video_player:
 
 dev_dependencies:
   flutter_test:

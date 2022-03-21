@@ -165,14 +165,14 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                     images.length, widget.idPro, widget.idTime, imgString);
                 DBHelper dbhelper;
                 await dbHelper.save(photo);
-                refreshImages();
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          ShList(imagePath: widget.imagePath)),
-                  (Route<dynamic> route) => false,
-                );
+                // refreshImages();
+                // Navigator.pushAndRemoveUntil(
+                //   context,
+                //   MaterialPageRoute(
+                //       builder: (context) =>
+                //           ShList(imagePath: widget.imagePath,)),
+                //   (Route<dynamic> route) => false,
+                // );
               },
               child: Text("Save"))
         ],
