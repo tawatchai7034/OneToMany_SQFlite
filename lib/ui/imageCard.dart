@@ -61,6 +61,9 @@ class _CardImageState extends State<CardImage> {
               style: TextStyle(
                 color: Colors.black,
               )),
+          subtitle: widget.items.imageSide != null
+              ? Text(widget.items.imageSide)
+              : Text("not image"),
           onTap: () {},
           trailing: IconButton(
             icon: Icon(Icons.edit),
@@ -68,7 +71,7 @@ class _CardImageState extends State<CardImage> {
               showDialog(
                   context: context,
                   builder: (BuildContext context) =>
-                      dialog.buildAlert(context, widget.items, false, ''));
+                      dialog.buildAlert(context, widget.items, false));
             },
             color: Colors.black,
           ),

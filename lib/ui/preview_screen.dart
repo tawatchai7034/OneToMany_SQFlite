@@ -7,6 +7,7 @@ import 'package:one_to_many_sqf/models/photo.dart';
 import 'package:one_to_many_sqf/models/shopping_list.dart';
 import 'package:one_to_many_sqf/models/utility.dart';
 import 'package:one_to_many_sqf/ui/captures_screen.dart';
+import 'package:one_to_many_sqf/util/dbhelper.dart';
 import 'package:one_to_many_sqf/util/helper.dart';
 
 class PreviewScreen extends StatefulWidget {
@@ -27,7 +28,8 @@ class PreviewScreen extends StatefulWidget {
 }
 
 class _PreviewScreenState extends State<PreviewScreen> {
-  late DBHelper dbHelper;
+  DBHelper dbHelper = DBHelper();
+  DbHelper dbCat = DbHelper();
   late List<Photo> images;
 
   @override
@@ -78,8 +80,25 @@ class _PreviewScreenState extends State<PreviewScreen> {
                         Utility.base64String(file.readAsBytesSync());
                     Photo photo = Photo(images.length, widget.shoppingList.id,
                         widget.items.id, imgString);
-                    DBHelper dbhelper;
+                    
                     await dbHelper.save(photo);
+                    
+                    widget.items.id = widget.items.id;
+                    widget.items.idList = widget.items.idList;
+                    widget.items.bodyLenght = widget.items.bodyLenght ;
+                    widget.items.heartGirth = widget.items.heartGirth;
+                    widget.items.hearLenghtSide = widget.items.hearLenghtSide;
+                    widget.items.hearLenghtRear = widget.items.hearLenghtRear;
+                    widget.items.hearLenghtTop = widget.items.hearLenghtTop;
+                    widget.items.pixelReference = widget.items.pixelReference;
+                    widget.items.distanceReference = widget.items.distanceReference;
+                    widget.items.imageSide = images.length.toString();
+                    widget.items.imageRear = widget.items.imageRear;
+                    widget.items.imageTop = widget.items.imageTop;
+                    widget.items.date = widget.items.date;
+                    widget.items.note = widget.items.note;
+                    await dbCat.insertItem(widget.items);
+
                     // Navigator.of(context).pushReplacement(
                     //   MaterialPageRoute(
                     //     builder: (context) => CapturesScreen(
@@ -138,6 +157,9 @@ class _PreviewScreenState extends State<PreviewScreen> {
           Expanded(
             child: Image.file(widget.imageFile),
           ),
+          // Expanded(
+          //   child:Text("${widget.items.id}\n${widget.items.idList}\n${widget.items.imageSide}",style:TextStyle(color: Colors.white)),
+          // ),
         ],
       ),
     );

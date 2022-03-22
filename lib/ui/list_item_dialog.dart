@@ -16,7 +16,7 @@ class ListItemDialog {
   // final txtQuantity = TextEditingController();
   final txtNote = TextEditingController();
 
-  Widget buildAlert(BuildContext context, ListItem item, bool isNew,String imagePath) {
+  Widget buildAlert(BuildContext context, ListItem item, bool isNew) {
     print(item);
     DbHelper helper = DbHelper();
     helper.openDb();
@@ -82,9 +82,9 @@ class ListItemDialog {
                   item.hearLenghtTop = double.parse(txtHearLenghtTop.text);
                   item.pixelReference = double.parse(txtPixelReference.text);
                   item.distanceReference = double.parse(txtDistanceReference.text);
-                  item.imageSide = imagePath;
-                  item.imageSide = imagePath;
-                  item.imageSide = imagePath;
+                  item.imageSide = '';
+                  item.imageSide = '';
+                  item.imageSide = '';
                   item.date = DateTime.now().toIso8601String();
                   // item.quantity = txtQuantity.text;
                   item.note = txtNote.text;

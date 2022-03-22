@@ -8,29 +8,6 @@ import '../models/shopping_list.dart';
 import 'dart:io' as io;
 
 class DbHelper {
-  // static Database? _db;
-  // Future<Database> get db async {
-  //   if (null != _db) {
-  //     return _db!;
-  //   }
-  //   _db = await initDb();
-  //   return _db!;
-  // }
-
-  // initDb() async {
-  //   io.Directory documentsDirectory = await getApplicationDocumentsDirectory();
-  //   String path = join(documentsDirectory.path, "shopping.db");
-  //   var db = await openDatabase(path, version: 1, onCreate: _onCreate);
-  //   return db;
-  // }
-
-  // _onCreate(Database db, int version) async {
-  //   await db.execute(
-  //       'CREATE TABLE lists(id INTEGER PRIMARY KEY, name TEXT, gender TEXT, species TEXT)');
-  //   await db.execute(
-  //       'CREATE TABLE items(id INTEGER PRIMARY KEY, idList INTEGER,bodyLenght REAL,heartGirth REAL,hearLenghtSide REAL,hearLenghtRear REAL,hearLenghtTop REAL,pixelReference REAL,distanceReference REAL,imageSide TEXT, imageRear TEXT, imageTop TEXT,date TEXT,note TEXT ' +
-  //           'FOREIGN KEY(idList) REFERENCES lists(id))');
-  // }
 
   final int version = 1;
   Database db;
