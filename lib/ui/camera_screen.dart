@@ -588,20 +588,21 @@ class _CameraScreenState extends State<CameraScreen>
                                                   '${directory.path}/$currentUnix.$fileFormat',
                                                 );
 
-                                                Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        PreviewScreen(
-                                                      imageFile: _imageFile!,
-                                                      fileList: allFileList,
-                                                      shoppingList:
-                                                          widget.shoppingList,
-                                                      items: widget.items,
-                                                    ),
-                                                  ),
-                                                );
-                                                
                                                 refreshAlreadyCapturedImages();
+
+                                                // Navigator.of(context).push(
+                                                //   MaterialPageRoute(
+                                                //     builder: (context) =>
+                                                //         PreviewScreen(
+                                                //       imageFile: _imageFile!,
+                                                //       fileList: allFileList,
+                                                //       shoppingList:
+                                                //           widget.shoppingList,
+                                                //       items: widget.items,
+                                                //     ),
+                                                //   ),
+                                                // );
+                                                
                                                 // ****** picture ******
                                               },
                                         child: Stack(

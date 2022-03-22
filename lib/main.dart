@@ -37,15 +37,15 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: ShList(camera: cameras.first, imagePath: ''),
+      home: ShList(),
     );
   }
 }
 
 class ShList extends StatefulWidget {
-  final CameraDescription camera;
-  final String imagePath;
-  const ShList({Key key, this.camera, this.imagePath}) : super(key: key);
+  const ShList({
+    Key key,
+  }) : super(key: key);
   @override
   _ShListState createState() => _ShListState();
 }
@@ -91,8 +91,8 @@ class _ShListState extends State<ShList> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => SaveImage(
-                                camera: widget.camera, idPro: 0, idTime: 0)));
+                            builder: (context) =>
+                                SaveImage(idPro: 0, idTime: 0)));
                   },
                   icon: Icon(Icons.photo))
             ],
@@ -128,7 +128,6 @@ class _ShListState extends State<ShList> {
                         MaterialPageRoute(
                             builder: (context) => CatTimeScreen(
                                 shoppingList: shoppingList[index],
-                                camera: widget.camera,
                                 imagePath: null)),
                       );
                     },

@@ -136,12 +136,10 @@ import 'list_item_dialog.dart';
 
 class CatTimeScreen extends StatefulWidget {
   final ShoppingList shoppingList;
-  final CameraDescription camera;
   final String imagePath;
   const CatTimeScreen({
     Key? key,
     required this.shoppingList,
-    required this.camera,
     required this.imagePath,
   }) : super(key: key);
 

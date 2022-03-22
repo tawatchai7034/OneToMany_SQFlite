@@ -8,18 +8,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:one_to_many_sqf/models/photo.dart';
 import 'package:one_to_many_sqf/models/utility.dart';
 import 'package:one_to_many_sqf/ui/camera_page.dart';
+import 'package:one_to_many_sqf/ui/camera_screen.dart';
 import 'package:one_to_many_sqf/util/helper.dart';
 
 class SaveImage extends StatefulWidget {
-   final CameraDescription camera;
-   final int idPro;
-   final int idTime;
-  const SaveImage({
-    Key? key,
-    required this.camera,
-    required this.idPro,
-    required this.idTime
-  }) : super(key: key);
+  final int idPro;
+  final int idTime;
+  const SaveImage({Key? key, required this.idPro, required this.idTime})
+      : super(key: key);
 
   @override
   State<SaveImage> createState() => _SaveImageState();
@@ -53,7 +49,8 @@ class _SaveImageState extends State<SaveImage> {
     _picker.pickImage(source: ImageSource.gallery).then((imgFile) {
       final file = File(imgFile!.path);
       String imgString = Utility.base64String(file.readAsBytesSync());
-      Photo photo = Photo(images.length,widget.idPro,widget.idTime, imgString);
+      Photo photo =
+          Photo(images.length, widget.idPro, widget.idTime, imgString);
       dbHelper.save(photo);
       refreshImages();
     });
@@ -91,21 +88,6 @@ class _SaveImageState extends State<SaveImage> {
             icon: Icon(Icons.add),
             onPressed: () {
               pickImageFromGallery();
-            },
-          ),
-          SizedBox(height: 16),
-          IconButton(
-            icon: Icon(Icons.camera_alt),
-            onPressed: () {
-              Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TakePictureScreen(
-                          camera: widget.camera,idPro: widget.idPro,idTime: widget.idTime,
-                          onCallback: (){print("Save image callback");},
-                        ),
-                      ),
-                    );
             },
           ),
         ],

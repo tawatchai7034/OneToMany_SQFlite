@@ -27,7 +27,7 @@ class PreviewScreen extends StatefulWidget {
 }
 
 class _PreviewScreenState extends State<PreviewScreen> {
-   late DBHelper dbHelper;
+  late DBHelper dbHelper;
   late List<Photo> images;
 
   @override
@@ -47,6 +47,7 @@ class _PreviewScreenState extends State<PreviewScreen> {
       });
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,46 +55,60 @@ class _PreviewScreenState extends State<PreviewScreen> {
         Row(
           children: [
             Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: IconButton(
-              onPressed: () {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => CapturesScreen(
-                      imageFileList: widget.fileList,
-                      shoppingList: widget.shoppingList,
-                      items: widget.items
-                    ),
-                  ),
-                );
-              },
-              icon: Icon(Icons.photo)
+              padding: const EdgeInsets.all(4.0),
+              child: IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => CapturesScreen(
+                            imageFileList: widget.fileList,
+                            shoppingList: widget.shoppingList,
+                            items: widget.items),
+                      ),
+                    );
+                  },
+                  icon: Icon(Icons.photo)),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: IconButton(
-              onPressed: () async{
-                final file = widget.imageFile;
-                String imgString = Utility.base64String(file.readAsBytesSync());
-                Photo photo = Photo(
-                    images.length, widget.shoppingList.id, widget.items.id, imgString);
-                DBHelper dbhelper;
-                await dbHelper.save(photo);
-                // Navigator.of(context).pushReplacement(
-                //   MaterialPageRoute(
-                //     builder: (context) => CapturesScreen(
-                //       imageFileList: widget.fileList,
-                //       shoppingList: widget.shoppingList,
-                //       items: widget.items
-                //     ),
-                //   ),
-                // );
-                print("save image success.");
-              },
-              icon: Icon(Icons.save_rounded)
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: IconButton(
+                  onPressed: () async {
+                    final file = widget.imageFile;
+                    String imgString =
+                        Utility.base64String(file.readAsBytesSync());
+                    Photo photo = Photo(images.length, widget.shoppingList.id,
+                        widget.items.id, imgString);
+                    DBHelper dbhelper;
+                    await dbHelper.save(photo);
+                    // Navigator.of(context).pushReplacement(
+                    //   MaterialPageRoute(
+                    //     builder: (context) => CapturesScreen(
+                    //       imageFileList: widget.fileList,
+                    //       shoppingList: widget.shoppingList,
+                    //       items: widget.items
+                    //     ),
+                    //   ),
+                    // );
+                    print("Save image success.");
+                  },
+                  icon: Icon(Icons.save_rounded)),
             ),
-          ),
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: IconButton(
+                  onPressed: () async {
+                    final file = widget.imageFile;
+                    String imgString =
+                        Utility.base64String(file.readAsBytesSync());
+                    Photo photo = Photo(images.length, widget.shoppingList.id,
+                        widget.items.id, imgString);
+                    DBHelper dbhelper;
+                    await dbHelper.delete(photo);
+                    Navigator.pop(context);
+                    print("Delete image success.");
+                  },
+                  icon: Icon(Icons.delete)),
+            ),
           ],
         )
       ]),
